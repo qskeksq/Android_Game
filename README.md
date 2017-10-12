@@ -6,6 +6,10 @@
 - 시계 : 각도값 계산
 - 오뚜기 : 반응형 각도값 계산
 
+![](https://github.com/qskeksq/Game/blob/master/pic/AC_%5B20171011-214340%5D.gif)
+![](https://github.com/qskeksq/Game/blob/master/pic/AC_%5B20171011-221134%5D.gif)
+![](https://github.com/qskeksq/Game/blob/master/pic/AC_%5B20171011-221502%5D.gif)
+
 #### 장미 그리기
 - 원하는 좌표값에 비트맵을 그릴 수 있다.
 - Canvas rotate 원리 이해
