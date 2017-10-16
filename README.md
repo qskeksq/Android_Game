@@ -196,3 +196,77 @@ canvas.rotate(ang, cx, cy+rh-130);
 canvas.drawBitmap(rolyPoly, cx-rw, cy-rh+130, null);
 canvas.rotate(ang, cx, cy+rh-130);
 ```
+
+#### 사각 Target 다트
+
+- 겹쳐진 상태의 사각형 좌표 찾아내기
+
+```java
+@Override
+public boolean onTouchEvent(MotionEvent event) {
+
+    switch (event.getAction()){
+        case MotionEvent.ACTION_DOWN:
+            Bullet bullet = new Bullet();
+            int x = (int)event.getX();
+            int y = (int)event.getY();
+            bullet.x = x;
+            bullet.y = y;
+            if(rects[0].contains(x,y)){
+                bullet.point = 7;
+                total += 7;
+                point ++;
+            } else if(rects[1].contains(x,y)){
+                bullet.point = 5;
+                total += 5;
+                point++;
+            } else if(rects[2].contains(x,y)){
+                bullet.point = 3;
+                total += 3;
+                point++;
+            }
+            bulletList.add(bullet);
+            break;
+    }
+    invalidate();
+    return true;
+}
+```
+
+#### 원형 Target 다트
+- atan()을 이용하여 원의 각도 구하기
+- Math.pow() 이용 원의 포함 관계 구하기
+- Target을 12각도로 나눠 다트의 각도와 비교, 점수 구하기 
+
+```java
+private void calc(int x, int y){
+    // 점수를 몇 배 할 것인가
+    int n = 3;
+    score = 0;
+    // 먼저 삼각형의 x,y 변을 구한 후, 라디안 값을 각도 값으로 바꿔주고, 눈에 보이는 좌표와
+    // 컴퓨터의 좌표가 다르기 때문에 90도를 빼줘서 위아래를 바꿔준다
+    double degree = Math.atan2(cx-x, cy-y)*180/Math.PI - 90;
+    if(degree < 0){
+        degree += 360;
+    }
+    for(int i=0; i<targetRadius.length; i++){
+        // 다트가 떨어진 원이 타켓 원 안에 있는지 3번 돌면서 확인. 가장 바깥 안쪽 원부터 돌기 때문에 바깥 원으로 갈 때마가 n값을 뺴준다
+        if(Math.pow(cx-x, 2) <= Math.pow(targetRadius[i], 2)){
+            dartList.add(new Dart(x, y));
+            // 점수 계산
+            for (int j = 0; j < 12; j++) {
+                int k = 30*j + 15;
+                if(degree < k){
+                    score++;
+                    total += aScore[j]*n;
+                    break;
+                }
+            }
+            n--;
+            if(score > 0){
+                break;
+            }
+        }
+    }
+}
+```

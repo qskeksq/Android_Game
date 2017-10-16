@@ -6,5 +6,9 @@ package com.example.administrator.game.bitmap.SquareTarget;
 
 public class Bullet {
 
+    int x;
+    int y;
+    int point;
+
 
 }
